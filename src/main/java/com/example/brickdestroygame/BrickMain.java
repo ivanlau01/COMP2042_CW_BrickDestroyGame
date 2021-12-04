@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.io.IOException;
-import java.util.Objects;
 
 public class BrickMain extends Application {
 
@@ -15,7 +14,7 @@ public class BrickMain extends Application {
     public void start(Stage stage) throws IOException {
 
         System.out.println(System.getProperty("user.dir"));
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("HomePage.fxml")));
+        Parent root = FXMLLoader.load(BrickMain.class.getResource("HomePage.fxml"));
         Scene scene = new Scene(root, 450, 300);
 
         Image icon = new Image("brick.jpg");

@@ -8,7 +8,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brickdestroygame.SceneController">
     <center>
-        <AnchorPane prefHeight="300.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="scenePane" prefHeight="300.0" prefWidth="450.0" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="147.0" layoutY="21.0" prefHeight="44.0" prefWidth="195.0" text="Welcome to:">
                     <font>
@@ -25,17 +25,17 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Button layoutX="159.0" layoutY="153.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="130.0" text="Start">
+                <Button layoutX="159.0" layoutY="153.0" mnemonicParsing="false" onAction="#onToGamePage" prefHeight="44.0" prefWidth="130.0" text="Start">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Button>
-                <Button layoutX="159.0" layoutY="197.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="132.0" text="Guide">
+                <Button layoutX="159.0" layoutY="197.0" mnemonicParsing="false" onAction="#onToGuidePage" prefHeight="44.0" prefWidth="132.0" text="Guide">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Button>
-                <Button layoutX="159.0" layoutY="241.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="131.0" text="Exit">
+                <Button layoutX="159.0" layoutY="241.0" mnemonicParsing="false" onAction="#onToExitPage" prefHeight="44.0" prefWidth="131.0" text="Exit">
                     <font>
                         <Font size="20.0" />
                     </font>
