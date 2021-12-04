@@ -1,0 +1,115 @@
+package com.example.brickdestroygame;
+
+import javafx.animation.AnimationTimer;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+
+
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+
+public class GameController implements Initializable {
+
+    private GameBall gameBall;
+    private boolean pause = false;
+
+    @FXML
+    private Rectangle paddle;
+
+    @FXML
+    private AnchorPane scene;
+
+    @FXML
+    private Circle ball;
+
+
+    private final BooleanProperty aKey = new SimpleBooleanProperty();
+    private final BooleanProperty dKey = new SimpleBooleanProperty();
+    private final BooleanProperty pKey = new SimpleBooleanProperty();
+    private final BooleanProperty spaceBarKey = new SimpleBooleanProperty();
+
+    @FXML
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        timer.start();
+        paddle.setFocusTraversable(true);
+        gameBall = new GameBall(scene, ball, paddle);
+
+    }
+
+    AnimationTimer timer = new AnimationTimer() {
+        @Override
+        public void handle(long timestamp) {
+
+            int movementPaddle = 5;
+            if (aKey.get()) {
+                if (paddle.getLayoutX() > 0) {
+                    paddle.setLayoutX(paddle.getLayoutX() - movementPaddle);
+                }
+            }
+
+            if (dKey.get()) {
+                if (paddle.getLayoutX() < (540 - 75)) {
+                    paddle.setLayoutX(paddle.getLayoutX() + movementPaddle);
+                }
+            }
+
+            if(spaceBarKey.get()) {
+                gameBall.movementBall();
+            }
+            if(pKey.get()){
+                pauseGame();
+            }
+        }
+    };
+
+    @FXML
+    public void KeyPressed(KeyEvent event){
+        paddle.setFocusTraversable(true);
+        if (event.getCode() == KeyCode.A){
+            aKey.set(true);
+        }
+        if (event.getCode() == KeyCode.D){
+            dKey.set(true);
+        }
+        if (event.getCode() == KeyCode.SPACE){
+            spaceBarKey.set(true);
+        }
+        if (event.getCode() == KeyCode.P){
+            pKey.set(true);
+        }
+    }
+
+    @FXML
+    public void KeyReLeased(KeyEvent event){
+        if (event.getCode() == KeyCode.A){
+            aKey.set(false);
+        }
+        if (event.getCode() == KeyCode.D){
+            dKey.set(false);
+        }
+    }
+
+    public void pauseGame(){
+        pause = !pause;
+        if(pause){
+            timer.stop();
+            System.out.println("Game is Paused!");
+        }
+        else{
+            timer.start();
+            System.out.println("Game is Continued...");
+        }
+    }
+
+
+}
