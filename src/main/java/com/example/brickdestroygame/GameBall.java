@@ -47,7 +47,7 @@ public class GameBall {
     }
     private void startGame() {
         gameBall.setLayoutX(300);
-        gameBall.setLayoutY(373);
+        gameBall.setLayoutY(387);
         reverse_y_direction();
     }
 
