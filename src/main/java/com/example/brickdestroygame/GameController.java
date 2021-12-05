@@ -10,7 +10,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-
+import javafx.scene.paint.Color;
+import java.util.ArrayList;
 
 
 import java.net.URL;
@@ -21,6 +22,8 @@ public class GameController implements Initializable {
 
     private GameBall gameBall;
     private boolean pause = false;
+    private final ArrayList<Rectangle> bricks = new ArrayList<>();
+
 
     @FXML
     private Rectangle paddle;
@@ -43,9 +46,42 @@ public class GameController implements Initializable {
         timer.start();
         paddle.setFocusTraversable(true);
         gameBall = new GameBall(scene, ball, paddle);
+        createBricks();
 
     }
+    public void createBricks() {
 
+        int k = 0;
+
+        for(double i = 0; i < 1; i++) {
+            for(double j = 0; j < 10; j++) {
+                Rectangle rectangle = new Rectangle((j * 60), k, 60, 30);
+                rectangle.setFill(Color.RED);
+                scene.getChildren().add(rectangle);
+                bricks.add(rectangle);
+            }
+            k += 30;
+        }
+    }
+
+    public boolean brickImpact(Rectangle Brick){
+        if(ball.getBoundsInParent().intersects(Brick.getBoundsInParent())){
+            boolean rightBorder = ball.getLayoutX() >= ((Brick.getX() + Brick.getWidth()) - ball.getRadius());
+            boolean leftBorder = ball.getLayoutX() <= ((Brick.getX() + ball.getRadius()));
+            boolean downBorder = ball.getLayoutY() >= ((Brick.getY() + Brick.getHeight() -ball.getRadius()));
+            boolean upBorder = ball.getLayoutY() <= (Brick.getY() + ball.getRadius());
+
+            if(rightBorder || leftBorder){
+                gameBall.reverse_x_direction();
+            }
+            if(downBorder || upBorder){
+                gameBall.reverse_y_direction();
+            }
+            scene.getChildren().remove(Brick);
+            return true;
+        }
+        return false;
+    }
     AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long timestamp) {
@@ -68,6 +104,9 @@ public class GameController implements Initializable {
             }
             if(pKey.get()){
                 pauseGame();
+            }
+            if(!bricks.isEmpty()){
+                bricks.removeIf(bricks -> brickImpact(bricks));
             }
         }
     };
