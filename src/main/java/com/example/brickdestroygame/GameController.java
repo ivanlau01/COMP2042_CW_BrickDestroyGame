@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -141,7 +145,9 @@ public class GameController implements Initializable {
                 spaceBarKey = false;
                 ballCount--;
                 System.out.println(ballCount);
-
+                if (ballCount == 0){
+                    GameOver();
+                }
             }
             int movementPaddle = 5;
             if (aKey.get() && spaceBarKey) {
@@ -170,6 +176,9 @@ public class GameController implements Initializable {
                 pauseGame();
                 levelLabel.setVisible(true);
                 proceedNextLevel.setVisible(true);
+                if(gameLevel == 3){
+                    GameOver();
+                }
             }
         }
     };
@@ -225,5 +234,18 @@ public class GameController implements Initializable {
             System.out.println("Game is Continued...");
         }
     }
+    public void GameOver(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(BrickMain.class.getResource("GameOverPage.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) this.scene.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 }
