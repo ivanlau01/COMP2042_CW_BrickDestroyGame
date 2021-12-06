@@ -12,7 +12,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
-
+import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +25,7 @@ public class GameController implements Initializable {
     private GameBall gameBall;
     private boolean pause = false;
     private final ArrayList<Rectangle> bricks = new ArrayList<>();
-
+    private int gameLevel = 1;
 
     @FXML
     private Rectangle paddle;
@@ -34,6 +36,11 @@ public class GameController implements Initializable {
     @FXML
     private Circle ball;
 
+    @FXML
+    private Label levelLabel;
+
+    @FXML
+    private Button proceedNextLevel;
 
     private final BooleanProperty aKey = new SimpleBooleanProperty();
     private final BooleanProperty dKey = new SimpleBooleanProperty();
@@ -52,11 +59,22 @@ public class GameController implements Initializable {
     public void createBricks() {
 
         int k = 0;
+        Color colour = Color.SILVER;
+
+        if(gameLevel == 1){
+            colour = Color.RED;
+        }
+        else if(gameLevel == 2){
+            colour = Color.GRAY;
+        }
+        else if(gameLevel == 3){
+            colour = Color.SILVER;
+        }
 
         for(double i = 0; i < 1; i++) {
             for(double j = 0; j < 10; j++) {
                 Rectangle rectangle = new Rectangle((j * 60), k, 60, 30);
-                rectangle.setFill(Color.RED);
+                rectangle.setFill(colour);
                 scene.getChildren().add(rectangle);
                 bricks.add(rectangle);
             }
@@ -108,8 +126,27 @@ public class GameController implements Initializable {
             if(!bricks.isEmpty()){
                 bricks.removeIf(bricks -> brickImpact(bricks));
             }
+            else{
+                System.out.println("CONGRATULATIONS!");
+                pauseGame();
+                levelLabel.setVisible(true);
+                proceedNextLevel.setVisible(true);
+
+            }
         }
     };
+    public void nextGameLevel(ActionEvent event){
+        ball.setLayoutX(300);
+        ball.setLayoutY(387);
+        paddle.setLayoutX(225);
+        System.out.println("Level is cleared....");
+        bricks.clear();
+        gameLevel++;
+        createBricks();
+        levelLabel.setVisible(false);
+        proceedNextLevel.setVisible(false);
+    }
+
 
     @FXML
     public void KeyPressed(KeyEvent event){
