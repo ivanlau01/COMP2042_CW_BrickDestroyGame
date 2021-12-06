@@ -1,27 +1,27 @@
 package com.example.brickdestroygame;
 
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class GameBall {
-    private final AnchorPane scene;
     private final Circle gameBall;
-    private final Rectangle paddle;
     private int x_direction = 2;
     private int y_direction = 2;
 
-    public GameBall(AnchorPane scene, Circle gameBall, Rectangle paddle) {
+    public GameBall(Circle gameBall) {
         this.gameBall = gameBall;
-        this.scene = scene;
-        this.paddle = paddle;
         startGame();
     }
-    public void movementBall(){
-        gameBall.setLayoutX(gameBall.getLayoutX() + x_direction);
-        gameBall.setLayoutY(gameBall.getLayoutY() + y_direction);
 
-        boolean gamePaddleBorder = gameBall.getBoundsInParent().intersects(paddle.getBoundsInParent());
+    public void movementBall(Boolean movement) {
+        if (movement) {
+            gameBall.setLayoutX(gameBall.getLayoutX() + x_direction);
+            gameBall.setLayoutY(gameBall.getLayoutY() + y_direction);
+        }
+    }
+
+    public void checkImpact(){
+
         boolean rightBorder = gameBall.getLayoutX() >= (600 - gameBall.getRadius());
         boolean leftBorder = gameBall.getLayoutX() <= (0 + gameBall.getRadius());
         boolean upBorder = gameBall.getLayoutY() <= (0 + gameBall.getRadius());
@@ -30,11 +30,35 @@ public class GameBall {
         if(rightBorder || leftBorder){
             reverse_x_direction();
         }
-        if(upBorder || gamePaddleBorder){
+        if(upBorder || downBorder){
             reverse_y_direction();
         }
-        if (downBorder){
-            reverse_y_direction();
+    }
+
+    public void BallImpactGamePaddle(Rectangle paddle){
+        if (gameBall.getBoundsInParent().intersects(paddle.getBoundsInParent())){
+            boolean rightBorder = gameBall.getLayoutX() >= ((paddle.getLayoutX() + paddle.getWidth()) - gameBall.getRadius());
+            boolean leftBorder = gameBall.getLayoutX() <= ((paddle.getLayoutX() + gameBall.getRadius()));
+            boolean downBorder = gameBall.getLayoutY() >= ((paddle.getLayoutY() + paddle.getHeight() - gameBall.getRadius()));
+            boolean upBorder = gameBall.getLayoutY() <= (paddle.getLayoutY() + gameBall.getRadius());
+
+            if(rightBorder || leftBorder){
+                reverse_x_direction();
+            }
+            if(upBorder || downBorder){
+                reverse_y_direction();
+            }
+        }
+    }
+
+    public Boolean BallImpactLowestBorder(){
+        if(gameBall.getLayoutY() >= (400 - gameBall.getRadius())) {
+            gameBall.setLayoutX(299);
+            gameBall.setLayoutY(387);
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -50,7 +74,5 @@ public class GameBall {
         gameBall.setLayoutY(387);
         reverse_y_direction();
     }
-
-
 
 }
