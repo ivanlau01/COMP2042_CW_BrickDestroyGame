@@ -19,13 +19,13 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class GameController implements Initializable {
 
     private GameBall gameBall;
     private boolean pause = false;
     private final ArrayList<Rectangle> bricks = new ArrayList<>();
     private int gameLevel = 1;
+    private int ballCount = 3;
 
     @FXML
     private Rectangle paddle;
@@ -45,14 +45,14 @@ public class GameController implements Initializable {
     private final BooleanProperty aKey = new SimpleBooleanProperty();
     private final BooleanProperty dKey = new SimpleBooleanProperty();
     private final BooleanProperty pKey = new SimpleBooleanProperty();
-    private final BooleanProperty spaceBarKey = new SimpleBooleanProperty();
+    private Boolean spaceBarKey = false;
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         timer.start();
         paddle.setFocusTraversable(true);
-        gameBall = new GameBall(scene, ball, paddle);
+        gameBall = new GameBall(ball);
         createBricks();
 
     }
@@ -70,9 +70,10 @@ public class GameController implements Initializable {
         else if(gameLevel == 3){
             colour = Color.SILVER;
         }
-
-        for(double i = 0; i < 1; i++) {
-            for(double j = 0; j < 10; j++) {
+        int i;
+        int j;
+        for(i = 0; i < 1; i++) {
+            for( j = 0; j < 10; j++) {
                 Rectangle rectangle = new Rectangle((j * 60), k, 60, 30);
                 rectangle.setFill(colour);
                 scene.getChildren().add(rectangle);
@@ -95,30 +96,68 @@ public class GameController implements Initializable {
             if(downBorder || upBorder){
                 gameBall.reverse_y_direction();
             }
+            switch(getHealthBrick(Brick)) {
+                case 3 -> Brick.setFill(Color.GRAY);
+                case 2 -> Brick.setFill(Color.RED);
+                case 1 -> {
+                    scene.getChildren().remove(Brick);
+                    return true;
+                }
+            }
             scene.getChildren().remove(Brick);
             return true;
         }
         return false;
     }
+    private int getHealthBrick(Rectangle Brick) {
+        int healthBrick = 3;
+
+        if(Brick.getFill() == Color.SILVER){
+            healthBrick = 3;
+        }
+        else if(Brick.getFill() == Color.GRAY){
+            healthBrick = 2;
+        }
+        else if(Brick.getFill() == Color.RED) {
+            healthBrick = 1;
+        }
+        else{
+            return healthBrick;
+        }
+        return healthBrick;
+    }
+
+
     AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long timestamp) {
 
+            gameBall.checkImpact();
+            gameBall.BallImpactGamePaddle(paddle);
+
+            if(gameBall.BallImpactLowestBorder()){
+                gameBall.movementBall(false);
+                paddle.setLayoutX(225);
+                spaceBarKey = false;
+                ballCount--;
+                System.out.println(ballCount);
+
+            }
             int movementPaddle = 5;
-            if (aKey.get()) {
+            if (aKey.get() && spaceBarKey) {
                 if (paddle.getLayoutX() > 0) {
                     paddle.setLayoutX(paddle.getLayoutX() - movementPaddle);
                 }
             }
 
-            if (dKey.get()) {
+            if (dKey.get() && spaceBarKey) {
                 if (paddle.getLayoutX() < (540 - 75)) {
                     paddle.setLayoutX(paddle.getLayoutX() + movementPaddle);
                 }
             }
 
-            if(spaceBarKey.get()) {
-                gameBall.movementBall();
+            if(spaceBarKey) {
+                gameBall.movementBall(true);
             }
             if(pKey.get()){
                 pauseGame();
@@ -131,22 +170,22 @@ public class GameController implements Initializable {
                 pauseGame();
                 levelLabel.setVisible(true);
                 proceedNextLevel.setVisible(true);
-
             }
         }
     };
     public void nextGameLevel(ActionEvent event){
-        ball.setLayoutX(300);
+        gameBall.movementBall(false);
+        ball.setLayoutX(299);
         ball.setLayoutY(387);
         paddle.setLayoutX(225);
         System.out.println("Level is cleared....");
         bricks.clear();
         gameLevel++;
         createBricks();
+
         levelLabel.setVisible(false);
         proceedNextLevel.setVisible(false);
     }
-
 
     @FXML
     public void KeyPressed(KeyEvent event){
@@ -158,7 +197,7 @@ public class GameController implements Initializable {
             dKey.set(true);
         }
         if (event.getCode() == KeyCode.SPACE){
-            spaceBarKey.set(true);
+            spaceBarKey = true;
         }
         if (event.getCode() == KeyCode.P){
             pKey.set(true);
@@ -186,6 +225,5 @@ public class GameController implements Initializable {
             System.out.println("Game is Continued...");
         }
     }
-
 
 }
