@@ -5,12 +5,11 @@ import javafx.scene.shape.Rectangle;
 
 public class GameBall {
     private final Circle gameBall;
-    private int x_direction = 2;
-    private int y_direction = 2;
+    private int x_direction = 3;
+    private int y_direction = 3;
 
     public GameBall(Circle gameBall) {
         this.gameBall = gameBall;
-        startGame();
     }
 
     public void movementBall(Boolean movement) {
@@ -39,8 +38,9 @@ public class GameBall {
         if (gameBall.getBoundsInParent().intersects(paddle.getBoundsInParent())){
             boolean rightBorder = gameBall.getLayoutX() >= ((paddle.getLayoutX() + paddle.getWidth()) - gameBall.getRadius());
             boolean leftBorder = gameBall.getLayoutX() <= ((paddle.getLayoutX() + gameBall.getRadius()));
-            boolean downBorder = gameBall.getLayoutY() >= ((paddle.getLayoutY() + paddle.getHeight() - gameBall.getRadius()));
             boolean upBorder = gameBall.getLayoutY() <= (paddle.getLayoutY() + gameBall.getRadius());
+            boolean downBorder = gameBall.getLayoutY() >= ((paddle.getLayoutY() + paddle.getHeight() - gameBall.getRadius()));
+
 
             if(rightBorder || leftBorder){
                 reverse_x_direction();
@@ -53,8 +53,8 @@ public class GameBall {
 
     public Boolean BallImpactLowestBorder(){
         if(gameBall.getLayoutY() >= (400 - gameBall.getRadius())) {
-            gameBall.setLayoutX(299);
-            gameBall.setLayoutY(387);
+            gameBall.setLayoutX(300);
+            gameBall.setLayoutY(386);
             return true;
         }
         else{
@@ -68,11 +68,6 @@ public class GameBall {
 
     public void reverse_y_direction(){
         y_direction *= -1;
-    }
-    private void startGame() {
-        gameBall.setLayoutX(300);
-        gameBall.setLayoutY(387);
-        reverse_y_direction();
     }
 
 }
