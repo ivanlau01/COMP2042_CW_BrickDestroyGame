@@ -30,6 +30,7 @@ public class GameController implements Initializable {
     private int gameLevel = 1;
     private int ballCount = 3;
     private int healthBrick = 3;
+    private int score = 0;
 
     @FXML
     private Rectangle paddle;
@@ -103,18 +104,23 @@ public class GameController implements Initializable {
             switch(getHealthBrick(Brick)) {
                 case 3:
                     Brick.setFill(Color.GRAY);
+                    score++;
+                    System.out.println("Score:" + score);
                     break;
 
                 case 2:
                     Brick.setFill(Color.RED);
+                    score++;
+                    System.out.println("Score:" + score);
                     break;
 
                 case 1:
                     scene.getChildren().remove(Brick);
+                    score++;
+                    System.out.println("Score:" + score);
                     return true;
                 }
             }
-
         return false;
     }
 
@@ -130,7 +136,7 @@ public class GameController implements Initializable {
                 paddle.setLayoutX(225);
                 spaceBarKey = false;
                 ballCount--;
-                System.out.println(ballCount);
+                System.out.println("\nLife:\n" + ballCount);
                 if (ballCount == 0) {
                     GameOver();
                 }
@@ -159,6 +165,8 @@ public class GameController implements Initializable {
             }
             else {
                 System.out.println("CONGRATULATIONS!");
+                gameBall.movementBall(false);
+                spaceBarKey = false;
                 pauseGame();
                 levelLabel.setVisible(true);
                 proceedNextLevel.setVisible(true);
@@ -173,7 +181,7 @@ public class GameController implements Initializable {
             timer.start();
             gameBall.movementBall(false);
             ball.setLayoutX(300);
-            ball.setLayoutY(387);
+            ball.setLayoutY(386);
             paddle.setLayoutX(225);
             System.out.println("Level is cleared....");
             bricks.clear();
@@ -242,6 +250,8 @@ public class GameController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(BrickMain.class.getResource("GameOverPage.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) this.scene.getScene().getWindow();
+            GameOver gameOver = fxmlLoader.getController();
+            gameOver.totalScore(score);
             stage.setScene(scene);
             stage.show();
         }
