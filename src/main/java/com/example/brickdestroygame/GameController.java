@@ -19,7 +19,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -139,13 +138,13 @@ public class GameController implements Initializable {
             gameBall.checkImpact();
             gameBall.BallImpactGamePaddle(paddle);
 
-            if(gameBall.BallImpactLowestBorder()){
+            if (gameBall.BallImpactLowestBorder()) {
                 gameBall.movementBall(false);
                 paddle.setLayoutX(225);
                 spaceBarKey = false;
                 ballCount--;
                 System.out.println(ballCount);
-                if (ballCount == 0){
+                if (ballCount == 0) {
                     GameOver();
                 }
             }
@@ -162,39 +161,42 @@ public class GameController implements Initializable {
                 }
             }
 
-            if(spaceBarKey) {
+            if (spaceBarKey) {
                 gameBall.movementBall(true);
             }
-            if(pKey.get()){
+            if (pKey.get()) {
                 pauseGame();
             }
-            if(!bricks.isEmpty()){
+            if (!bricks.isEmpty()) {
                 bricks.removeIf(bricks -> brickImpact(bricks));
             }
-            else{
+            else {
                 System.out.println("CONGRATULATIONS!");
                 pauseGame();
                 levelLabel.setVisible(true);
                 proceedNextLevel.setVisible(true);
-                if(gameLevel == 3){
+                if (gameLevel == 3) {
                     GameOver();
                 }
             }
         }
     };
-    public void nextGameLevel(ActionEvent event){
-        gameBall.movementBall(false);
-        ball.setLayoutX(299);
-        ball.setLayoutY(387);
-        paddle.setLayoutX(225);
-        System.out.println("Level is cleared....");
-        bricks.clear();
-        gameLevel++;
-        createBricks();
 
-        levelLabel.setVisible(false);
-        proceedNextLevel.setVisible(false);
-    }
+        public void nextGameLevel(ActionEvent event) {
+            timer.start();
+            gameBall.movementBall(false);
+            ball.setLayoutX(300);
+            ball.setLayoutY(387);
+            paddle.setLayoutX(225);
+            System.out.println("Level is cleared....");
+            bricks.clear();
+            gameLevel++;
+            createBricks();
+
+            levelLabel.setVisible(false);
+            proceedNextLevel.setVisible(false);
+        }
+
 
     @FXML
     public void KeyPressed(KeyEvent event){
