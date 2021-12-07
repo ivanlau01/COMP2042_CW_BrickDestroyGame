@@ -75,9 +75,9 @@ public class GameController implements Initializable {
         }
         int i;
         int j;
-        for(i = 0; i < 1; i++) {
+        for(i = 0; i < 3; i++) {
             for( j = 0; j < 10; j++) {
-                Rectangle rectangle = new Rectangle((j * 60), k, 60, 30);
+                Rectangle rectangle = new Rectangle((j * 61), k, 60, 28);
                 rectangle.setFill(colour);
                 scene.getChildren().add(rectangle);
                 bricks.add(rectangle);
