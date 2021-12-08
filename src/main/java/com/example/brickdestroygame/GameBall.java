@@ -5,8 +5,8 @@ import javafx.scene.shape.Rectangle;
 
 public class GameBall {
     private final Circle gameBall;
-    private int x_direction = 3;
-    private int y_direction = 3;
+    public int x_direction = 3;
+    public int y_direction = 3;
 
     public GameBall(Circle gameBall) {
         this.gameBall = gameBall;
@@ -24,7 +24,7 @@ public class GameBall {
         boolean rightBorder = gameBall.getLayoutX() >= (600 - gameBall.getRadius());
         boolean leftBorder = gameBall.getLayoutX() <= (0 + gameBall.getRadius());
         boolean upBorder = gameBall.getLayoutY() <= (0 + gameBall.getRadius());
-        boolean downBorder = gameBall.getLayoutY() >= (400 - gameBall.getRadius());
+        boolean downBorder = gameBall.getLayoutY() >= (455 - gameBall.getRadius());
 
         if(rightBorder || leftBorder){
             reverse_x_direction();
@@ -52,9 +52,9 @@ public class GameBall {
     }
 
     public Boolean BallImpactLowestBorder(){
-        if(gameBall.getLayoutY() >= (400 - gameBall.getRadius())) {
+        if(gameBall.getLayoutY() >= (445 - gameBall.getRadius())) {
             gameBall.setLayoutX(300);
-            gameBall.setLayoutY(386);
+            gameBall.setLayoutY(419);
             return true;
         }
         else{

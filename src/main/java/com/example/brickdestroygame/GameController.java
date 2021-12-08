@@ -12,7 +12,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
@@ -149,7 +148,7 @@ public class GameController implements Initializable {
             }
 
             if (dKey.get() && spaceBarKey) {
-                if (paddle.getLayoutX() < (540 - 75)) {
+                if (paddle.getLayoutX() < 460) {
                     paddle.setLayoutX(paddle.getLayoutX() + movementPaddle);
                 }
             }
@@ -177,11 +176,11 @@ public class GameController implements Initializable {
         }
     };
 
-        public void nextGameLevel(ActionEvent event) {
+        public void nextGameLevel() {
             timer.start();
             gameBall.movementBall(false);
             ball.setLayoutX(300);
-            ball.setLayoutY(386);
+            ball.setLayoutY(419);
             paddle.setLayoutX(225);
             System.out.println("Level is cleared....");
             bricks.clear();
