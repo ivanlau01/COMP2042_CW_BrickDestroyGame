@@ -157,7 +157,7 @@ public class GameController implements Initializable {
                 gameBall.movementBall(true);
             }
             if (pKey.get()) {
-                pauseGame();
+                pause = true;
             }
             if (!bricks.isEmpty()) {
                 bricks.removeIf(bricks -> brickImpact(bricks));
@@ -166,7 +166,7 @@ public class GameController implements Initializable {
                 System.out.println("CONGRATULATIONS!");
                 gameBall.movementBall(false);
                 spaceBarKey = false;
-                pauseGame();
+                pause = true;
                 levelLabel.setVisible(true);
                 proceedNextLevel.setVisible(true);
                 if (gameLevel == 3) {
@@ -217,9 +217,14 @@ public class GameController implements Initializable {
         }
         if (event.getCode() == KeyCode.SPACE){
             spaceBarKey = true;
+            pause = false;
+            timer.start();
         }
         if (event.getCode() == KeyCode.P){
             pKey.set(true);
+            pause = true;
+            timer.stop();
+            System.out.println("Game is Paused!");
         }
     }
 
@@ -233,17 +238,6 @@ public class GameController implements Initializable {
         }
     }
 
-    public void pauseGame(){
-        pause = !pause;
-        if(pause){
-            timer.stop();
-            System.out.println("Game is Paused!");
-        }
-        else{
-            timer.start();
-            System.out.println("Game is Continued...");
-        }
-    }
     public void GameOver(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(BrickMain.class.getResource("GameOverPage.fxml"));
