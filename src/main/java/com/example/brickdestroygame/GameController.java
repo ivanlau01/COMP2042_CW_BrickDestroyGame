@@ -20,16 +20,17 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.io.IOException;
 
 public class GameController implements Initializable {
 
     private GameBall gameBall;
-    private boolean pause = false;
     private final ArrayList<Rectangle> bricks = new ArrayList<>();
-    private int gameLevel = 1;
+    private int level = 2;
     private int ballCount = 3;
     private int healthBrick = 3;
     private int score = 0;
+    public static boolean endGame = false;
 
     @FXML
     private Rectangle paddle;
@@ -57,65 +58,176 @@ public class GameController implements Initializable {
         timer.start();
         paddle.setFocusTraversable(true);
         gameBall = new GameBall(ball);
-        createBricks();
+        createLevel();
 
     }
-    public void createBricks() {
-
+    public void singleTypeLayout(){
+        int i, j;
+        int size = 3;
         int k = 0;
-        Color colour = Color.SILVER;
 
-        if(gameLevel == 1){
-            colour = Color.RED;
-        }
-        else if(gameLevel == 2){
-            colour = Color.GRAY;
-        }
-        else if(gameLevel == 3){
-            colour = Color.SILVER;
-        }
-        int i;
-        int j;
-        for(i = 0; i < 3; i++) {
-            for( j = 0; j < 10; j++) {
-                Rectangle rectangle = new Rectangle((j * 61), k, 60, 28);
-                rectangle.setFill(colour);
+        Brick brick = new Brick();
+        Color singleColour = brick.getSingleColourLayout(level);
+
+        for(i = 0; i < size; i++){
+            if(i % 2 != 0){
+                Rectangle rectangle = new Rectangle(0, k, 59, 20);
+                rectangle.setFill(singleColour);
+                rectangle.setStroke(Color.BLACK);
                 scene.getChildren().add(rectangle);
                 bricks.add(rectangle);
+
+                for(j = 0; j < 10; j++){
+                    Rectangle rectangleA = new Rectangle((32 + (j * 60)), k, 59, 20);
+                    rectangleA.setFill(singleColour);
+                    rectangleA.setStroke(Color.BLACK);
+                    scene.getChildren().add(rectangleA);
+                    bricks.add(rectangleA);
+                }
             }
-            k += 30;
+            else{
+                for(j = 0; j < 10; j++){
+                    Rectangle rectangle = new Rectangle((j * 60), k, 59, 20);
+                    rectangle.setFill(singleColour);
+                    rectangle.setStroke(Color.BLACK);
+                    scene.getChildren().add(rectangle);
+                    bricks.add(rectangle);
+                }
+            }
+            k += 20;
+        }
+
+    }
+
+    public void chessBoardLayout(){
+
+        int i, j;
+        int k = 0;
+        int size = 3;
+
+        Brick brick = new Brick();
+        Color chessColourA = brick.getChessColourLayoutA(level);
+        Color chessColourB = brick.getChessColourLayoutB(level);
+
+        for(i = 0; i < size; i++){
+            for(j = 0; j < 10; j++){
+                if(i % 2 != 0){
+                    Rectangle rectangle = new Rectangle((j * 60), k, 59, 20);
+                    if((i + j) % 2 == 0) rectangle.setFill(chessColourA);
+                    else rectangle.setFill(chessColourB);
+                    rectangle.setStroke(Color.BLACK);
+                    scene.getChildren().add(rectangle);
+                    bricks.add(rectangle);
+
+                    for(j = 0; j < 10; j++){
+                        Rectangle rectangleA = new Rectangle((32 +(j * 60)), k, 59, 20);
+                        if((i + j) % 5 == 0) rectangleA.setFill(chessColourA);
+                        else rectangleA.setFill(chessColourB);
+                        rectangleA.setStroke(Color.BLACK);
+                        scene.getChildren().add(rectangleA);
+                        bricks.add(rectangleA);
+                    }
+                }
+                else{
+                    for(j = 0; j < 10; j++){
+                        Rectangle rectangle = new Rectangle((j * 60), k, 59, 20);
+                        if((i + j) % 2 == 0) rectangle.setFill(chessColourA);
+                        else rectangle.setFill(chessColourB);
+                        rectangle.setStroke(Color.BLACK);
+                        scene.getChildren().add(rectangle);
+                        bricks.add(rectangle);
+                    }
+                }
+                k += 20;
+            }
+     }
+    }
+    public void createLevel(){
+
+        bricks.clear();
+
+        if(level == 1 || level == 5 || level == 6){
+            singleTypeLayout();
+            System.out.println("CreateTest1");
+        }
+        else if(level == 2 || level == 3 || level == 4){
+            chessBoardLayout();
+            System.out.println("CreateTest2");
+        }
+        else{
+            GameOver();
         }
     }
 
     public boolean brickImpact(Rectangle Brick){
-        if(ball.getBoundsInParent().intersects(Brick.getBoundsInParent())){
+        if(ball.getBoundsInParent().intersects(Brick.getBoundsInParent())) {
             boolean rightBorder = ball.getLayoutX() >= ((Brick.getX() + Brick.getWidth()) - ball.getRadius());
             boolean leftBorder = ball.getLayoutX() <= ((Brick.getX() + ball.getRadius()));
-            boolean downBorder = ball.getLayoutY() >= ((Brick.getY() + Brick.getHeight() -ball.getRadius()));
+            boolean downBorder = ball.getLayoutY() >= ((Brick.getY() + Brick.getHeight() - ball.getRadius()));
             boolean upBorder = ball.getLayoutY() <= (Brick.getY() + ball.getRadius());
 
-            if(rightBorder || leftBorder){
+            if (leftBorder && downBorder) {
+                if (gameBall.x_direction < 0) {
+                    gameBall.reverse_y_direction();
+                } else if (gameBall.y_direction < 0) {
+                    gameBall.reverse_x_direction();
+                } else {
+                    gameBall.reverse_x_direction();
+                    gameBall.reverse_y_direction();
+                }
+            } else if (rightBorder && upBorder) {
+                if (gameBall.x_direction > 0) {
+                    gameBall.reverse_y_direction();
+                } else if (gameBall.y_direction > 0) {
+                    gameBall.reverse_x_direction();
+                } else {
+                    gameBall.reverse_x_direction();
+                    gameBall.reverse_y_direction();
+                }
+            } else if (upBorder && leftBorder) {
+                if (gameBall.x_direction < 0) {
+                    gameBall.reverse_y_direction();
+                } else if (gameBall.y_direction > 0) {
+                    gameBall.reverse_x_direction();
+                } else {
+                    gameBall.reverse_x_direction();
+                    gameBall.reverse_y_direction();
+                }
+            } else if (rightBorder && downBorder) {
+                if (gameBall.x_direction > 0) {
+                    gameBall.reverse_y_direction();
+                } else if (gameBall.y_direction < 0) {
+                    gameBall.reverse_x_direction();
+                } else {
+                    gameBall.reverse_x_direction();
+                    gameBall.reverse_y_direction();
+                }
+            }
+            else {
+
+            if (rightBorder || leftBorder) {
                 gameBall.reverse_x_direction();
             }
-            if(downBorder || upBorder){
+            if (downBorder || upBorder) {
                 gameBall.reverse_y_direction();
             }
+        }
             switch(getHealthBrick(Brick)) {
                 case 3:
-                    Brick.setFill(Color.GRAY);
-                    score++;
+                    Brick.setFill(Color.GRAY); //Cement
+                    score = score + 3;
                     System.out.println("Score:" + score);
                     break;
 
                 case 2:
-                    Brick.setFill(Color.RED);
-                    score++;
+                    Brick.setFill(Color.RED); //Clay
+                    score = score + 2;
                     System.out.println("Score:" + score);
                     break;
 
                 case 1:
                     scene.getChildren().remove(Brick);
-                    score++;
+                    score = score + 1;
                     System.out.println("Score:" + score);
                     return true;
                 }
@@ -135,6 +247,8 @@ public class GameController implements Initializable {
                 paddle.setLayoutX(225);
                 spaceBarKey = false;
                 ballCount--;
+                score = score - 1;
+                System.out.println("\nScore earn :" + score);
                 System.out.println("\nLife:\n" + ballCount);
                 if (ballCount == 0) {
                     GameOver();
@@ -156,9 +270,6 @@ public class GameController implements Initializable {
             if (spaceBarKey) {
                 gameBall.movementBall(true);
             }
-            if (pKey.get()) {
-                pause = true;
-            }
             if (!bricks.isEmpty()) {
                 bricks.removeIf(bricks -> brickImpact(bricks));
             }
@@ -166,10 +277,9 @@ public class GameController implements Initializable {
                 System.out.println("CONGRATULATIONS!");
                 gameBall.movementBall(false);
                 spaceBarKey = false;
-                pause = true;
                 levelLabel.setVisible(true);
                 proceedNextLevel.setVisible(true);
-                if (gameLevel == 3) {
+                if (level == 6) {
                     GameOver();
                 }
             }
@@ -184,8 +294,8 @@ public class GameController implements Initializable {
             paddle.setLayoutX(225);
             System.out.println("Level is cleared....");
             bricks.clear();
-            gameLevel++;
-            createBricks();
+            level++;
+            createLevel();
 
             levelLabel.setVisible(false);
             proceedNextLevel.setVisible(false);
@@ -194,18 +304,27 @@ public class GameController implements Initializable {
     private int getHealthBrick(Rectangle Brick) {
 
         if(Brick.getFill() == Color.SILVER){
-            healthBrick = 3;
+            healthBrick = 3; //Steel
         }
         else if(Brick.getFill() == Color.GRAY){
-            healthBrick = 2;
+            healthBrick = 2; //Cement
         }
         else if(Brick.getFill() == Color.RED) {
-            healthBrick = 1;
+            healthBrick = 1; //Clay
         }
             return healthBrick;
     }
 
+    public static void setGameOver(boolean end){
+            endGame = end;
+    }
 
+    private void gameOverConfirmation() throws IOException{
+            if(endGame){
+                timer.stop();
+                setGameOver(false);
+            }
+    }
     @FXML
     public void KeyPressed(KeyEvent event){
         paddle.setFocusTraversable(true);
@@ -217,12 +336,10 @@ public class GameController implements Initializable {
         }
         if (event.getCode() == KeyCode.SPACE){
             spaceBarKey = true;
-            pause = false;
             timer.start();
         }
         if (event.getCode() == KeyCode.P){
             pKey.set(true);
-            pause = true;
             timer.stop();
             System.out.println("Game is Paused!");
         }
