@@ -16,21 +16,25 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.stage.Window;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
+
 public class GameController implements Initializable {
 
     private GameBall gameBall;
     private final ArrayList<Rectangle> bricks = new ArrayList<>();
-    private int level = 2;
+    private int level = 1;
     private int ballCount = 3;
     private int healthBrick = 3;
     private int score = 0;
-    public static boolean endGame = false;
+    private Stage stage;
 
     @FXML
     private Rectangle paddle;
@@ -61,7 +65,8 @@ public class GameController implements Initializable {
         createLevel();
 
     }
-    public void singleTypeLayout(){
+
+    public void singleTypeLayout() {
         int i, j;
         int size = 3;
         int k = 0;
@@ -69,24 +74,23 @@ public class GameController implements Initializable {
         Brick brick = new Brick();
         Color singleColour = brick.getSingleColourLayout(level);
 
-        for(i = 0; i < size; i++){
-            if(i % 2 != 0){
+        for (i = 0; i < size; i++) {
+            if (i % 2 != 0) {
                 Rectangle rectangle = new Rectangle(0, k, 59, 20);
                 rectangle.setFill(singleColour);
                 rectangle.setStroke(Color.BLACK);
                 scene.getChildren().add(rectangle);
                 bricks.add(rectangle);
 
-                for(j = 0; j < 10; j++){
+                for (j = 0; j < 10; j++) {
                     Rectangle rectangleA = new Rectangle((32 + (j * 60)), k, 59, 20);
                     rectangleA.setFill(singleColour);
                     rectangleA.setStroke(Color.BLACK);
                     scene.getChildren().add(rectangleA);
                     bricks.add(rectangleA);
                 }
-            }
-            else{
-                for(j = 0; j < 10; j++){
+            } else {
+                for (j = 0; j < 10; j++) {
                     Rectangle rectangle = new Rectangle((j * 60), k, 59, 20);
                     rectangle.setFill(singleColour);
                     rectangle.setStroke(Color.BLACK);
@@ -99,7 +103,7 @@ public class GameController implements Initializable {
 
     }
 
-    public void chessBoardLayout(){
+    public void chessBoardLayout() {
 
         int i, j;
         int k = 0;
@@ -109,29 +113,28 @@ public class GameController implements Initializable {
         Color chessColourA = brick.getChessColourLayoutA(level);
         Color chessColourB = brick.getChessColourLayoutB(level);
 
-        for(i = 0; i < size; i++){
-            for(j = 0; j < 10; j++){
-                if(i % 2 != 0){
+        for (i = 0; i < size; i++) {
+            for (j = 0; j < 10; j++) {
+                if (i % 2 != 0) {
                     Rectangle rectangle = new Rectangle((j * 60), k, 59, 20);
-                    if((i + j) % 2 == 0) rectangle.setFill(chessColourA);
+                    if ((i + j) % 2 == 0) rectangle.setFill(chessColourA);
                     else rectangle.setFill(chessColourB);
                     rectangle.setStroke(Color.BLACK);
                     scene.getChildren().add(rectangle);
                     bricks.add(rectangle);
 
-                    for(j = 0; j < 10; j++){
-                        Rectangle rectangleA = new Rectangle((32 +(j * 60)), k, 59, 20);
-                        if((i + j) % 5 == 0) rectangleA.setFill(chessColourA);
+                    for (j = 0; j < 10; j++) {
+                        Rectangle rectangleA = new Rectangle((32 + (j * 60)), k, 59, 20);
+                        if ((i + j) % 5 == 0) rectangleA.setFill(chessColourA);
                         else rectangleA.setFill(chessColourB);
                         rectangleA.setStroke(Color.BLACK);
                         scene.getChildren().add(rectangleA);
                         bricks.add(rectangleA);
                     }
-                }
-                else{
-                    for(j = 0; j < 10; j++){
+                } else {
+                    for (j = 0; j < 10; j++) {
                         Rectangle rectangle = new Rectangle((j * 60), k, 59, 20);
-                        if((i + j) % 2 == 0) rectangle.setFill(chessColourA);
+                        if ((i + j) % 2 == 0) rectangle.setFill(chessColourA);
                         else rectangle.setFill(chessColourB);
                         rectangle.setStroke(Color.BLACK);
                         scene.getChildren().add(rectangle);
@@ -140,27 +143,24 @@ public class GameController implements Initializable {
                 }
                 k += 20;
             }
-     }
+        }
     }
-    public void createLevel(){
+
+    public void createLevel() {
 
         bricks.clear();
 
-        if(level == 1 || level == 5 || level == 6){
+        if (level == 1 || level == 5 || level == 6) {
             singleTypeLayout();
-            System.out.println("CreateTest1");
-        }
-        else if(level == 2 || level == 3 || level == 4){
+        } else if (level == 2 || level == 3 || level == 4) {
             chessBoardLayout();
-            System.out.println("CreateTest2");
-        }
-        else{
+        } else {
             GameOver();
         }
     }
 
-    public boolean brickImpact(Rectangle Brick){
-        if(ball.getBoundsInParent().intersects(Brick.getBoundsInParent())) {
+    public boolean brickImpact(Rectangle Brick) {
+        if (ball.getBoundsInParent().intersects(Brick.getBoundsInParent())) {
             boolean rightBorder = ball.getLayoutX() >= ((Brick.getX() + Brick.getWidth()) - ball.getRadius());
             boolean leftBorder = ball.getLayoutX() <= ((Brick.getX() + ball.getRadius()));
             boolean downBorder = ball.getLayoutY() >= ((Brick.getY() + Brick.getHeight() - ball.getRadius()));
@@ -202,25 +202,24 @@ public class GameController implements Initializable {
                     gameBall.reverse_x_direction();
                     gameBall.reverse_y_direction();
                 }
-            }
-            else {
+            } else {
 
-            if (rightBorder || leftBorder) {
-                gameBall.reverse_x_direction();
+                if (rightBorder || leftBorder) {
+                    gameBall.reverse_x_direction();
+                }
+                if (downBorder || upBorder) {
+                    gameBall.reverse_y_direction();
+                }
             }
-            if (downBorder || upBorder) {
-                gameBall.reverse_y_direction();
-            }
-        }
-            switch(getHealthBrick(Brick)) {
+            switch (getHealthBrick(Brick)) {
                 case 3:
-                    Brick.setFill(Color.GRAY); //Cement
+                    Brick.setFill(Color.GRAY); //Cement brick
                     score = score + 3;
                     System.out.println("Score:" + score);
                     break;
 
                 case 2:
-                    Brick.setFill(Color.RED); //Clay
+                    Brick.setFill(Color.RED); //Clay brick
                     score = score + 2;
                     System.out.println("Score:" + score);
                     break;
@@ -230,8 +229,8 @@ public class GameController implements Initializable {
                     score = score + 1;
                     System.out.println("Score:" + score);
                     return true;
-                }
             }
+        }
         return false;
     }
 
@@ -248,7 +247,7 @@ public class GameController implements Initializable {
                 spaceBarKey = false;
                 ballCount--;
                 score = score - 1;
-                System.out.println("\nScore earn :" + score);
+                System.out.println("\nTotal Score now :" + score);
                 System.out.println("\nLife:\n" + ballCount);
                 if (ballCount == 0) {
                     GameOver();
@@ -272,9 +271,7 @@ public class GameController implements Initializable {
             }
             if (!bricks.isEmpty()) {
                 bricks.removeIf(bricks -> brickImpact(bricks));
-            }
-            else {
-                System.out.println("CONGRATULATIONS!");
+            } else {
                 gameBall.movementBall(false);
                 spaceBarKey = false;
                 levelLabel.setVisible(true);
@@ -286,71 +283,95 @@ public class GameController implements Initializable {
         }
     };
 
-        public void nextGameLevel() {
-            timer.start();
-            gameBall.movementBall(false);
-            ball.setLayoutX(300);
-            ball.setLayoutY(419);
-            paddle.setLayoutX(225);
-            System.out.println("Level is cleared....");
-            bricks.clear();
-            level++;
-            createLevel();
+    public void nextGameLevel() {
+        timer.start();
+        gameBall.movementBall(false);
+        ball.setLayoutX(300);
+        ball.setLayoutY(419);
+        paddle.setLayoutX(225);
+        System.out.println("Level is cleared....");
+        bricks.clear();
+        level++;
+        createLevel();
 
-            levelLabel.setVisible(false);
-            proceedNextLevel.setVisible(false);
-        }
+        levelLabel.setVisible(false);
+        proceedNextLevel.setVisible(false);
+    }
 
     private int getHealthBrick(Rectangle Brick) {
 
-        if(Brick.getFill() == Color.SILVER){
-            healthBrick = 3; //Steel
+        if (Brick.getFill() == Color.SILVER) {
+            healthBrick = 3; //Steel brick
+        } else if (Brick.getFill() == Color.GRAY) {
+            healthBrick = 2; //Cement brick
+        } else if (Brick.getFill() == Color.RED) {
+            healthBrick = 1; //Clay brick
         }
-        else if(Brick.getFill() == Color.GRAY){
-            healthBrick = 2; //Cement
-        }
-        else if(Brick.getFill() == Color.RED) {
-            healthBrick = 1; //Clay
-        }
-            return healthBrick;
+        return healthBrick;
     }
 
-    public static void setGameOver(boolean end){
-            endGame = end;
-    }
+    public void openConsolePage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(BrickMain.class.getResource("ConsolePage.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene consoleScene = new Scene(root, 300, 100);
 
-    private void gameOverConfirmation() throws IOException{
-            if(endGame){
-                timer.stop();
-                setGameOver(false);
-            }
-    }
+        DebugConsole debugConsole = fxmlLoader.getController();
+        debugConsole.setLevel(level);
+        debugConsole.setBallCount(ballCount);
+        Stage console = new Stage();
+
+        console.initModality(Modality.APPLICATION_MODAL);
+        console.initOwner(stage);
+        console.setScene(consoleScene);
+        console.centerOnScreen();
+        console.show();
+        console.setOnCloseRequest(event ->{
+                ballCount = debugConsole.ballCount;
+        if (level != debugConsole.level) {
+            timer.stop();
+            level = debugConsole.level;
+            scene.getChildren().removeAll(bricks);
+            createLevel();
+        }
+    });
+}
+
     @FXML
-    public void KeyPressed(KeyEvent event){
+    public void KeyPressed(KeyEvent event) {
         paddle.setFocusTraversable(true);
-        if (event.getCode() == KeyCode.A){
+        if (event.getCode() == KeyCode.A) {
             aKey.set(true);
         }
-        if (event.getCode() == KeyCode.D){
+        if (event.getCode() == KeyCode.D) {
             dKey.set(true);
         }
-        if (event.getCode() == KeyCode.SPACE){
+        if (event.getCode() == KeyCode.SPACE) {
             spaceBarKey = true;
             timer.start();
         }
-        if (event.getCode() == KeyCode.P){
+        if (event.getCode() == KeyCode.P) {
             pKey.set(true);
             timer.stop();
             System.out.println("Game is Paused!");
         }
+        if(event.getCode() == KeyCode.F1){
+            timer.stop();
+            try {
+                openConsolePage();
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
+
     @FXML
-    public void KeyReLeased(KeyEvent event){
-        if (event.getCode() == KeyCode.A){
+    public void KeyReLeased(KeyEvent event) {
+        if (event.getCode() == KeyCode.A) {
             aKey.set(false);
         }
-        if (event.getCode() == KeyCode.D){
+        if (event.getCode() == KeyCode.D) {
             dKey.set(false);
         }
     }
