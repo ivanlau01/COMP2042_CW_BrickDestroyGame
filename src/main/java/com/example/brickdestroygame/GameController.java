@@ -19,7 +19,6 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import javafx.stage.Window;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,6 +49,15 @@ public class GameController implements Initializable {
 
     @FXML
     private Button proceedNextLevel;
+
+    @FXML
+    private Label showScore;
+
+    @FXML
+    private Label showBallCount;
+
+    @FXML
+    private Label showGameLevels;
 
     private final BooleanProperty aKey = new SimpleBooleanProperty();
     private final BooleanProperty dKey = new SimpleBooleanProperty();
@@ -149,6 +157,7 @@ public class GameController implements Initializable {
     public void createLevel() {
 
         bricks.clear();
+        setShowGameLevels();
 
         if (level == 1 || level == 5 || level == 6) {
             singleTypeLayout();
@@ -216,18 +225,21 @@ public class GameController implements Initializable {
                     Brick.setFill(Color.GRAY); //Cement brick
                     score = score + 3;
                     System.out.println("Score:" + score);
+                    setShowScore();
                     break;
 
                 case 2:
                     Brick.setFill(Color.RED); //Clay brick
                     score = score + 2;
                     System.out.println("Score:" + score);
+                    setShowScore();
                     break;
 
                 case 1:
                     scene.getChildren().remove(Brick);
                     score = score + 1;
                     System.out.println("Score:" + score);
+                    setShowScore();
                     return true;
             }
         }
@@ -249,6 +261,8 @@ public class GameController implements Initializable {
                 score = score - 1;
                 System.out.println("\nTotal Score now :" + score);
                 System.out.println("\nLife:\n" + ballCount);
+                setShowScore();
+                setShowBallCount();
                 if (ballCount == 0) {
                     GameOver();
                 }
@@ -308,6 +322,16 @@ public class GameController implements Initializable {
             healthBrick = 1; //Clay brick
         }
         return healthBrick;
+    }
+    public void setShowScore(){
+        showScore.setText(String.format("%d",score));
+    }
+
+    public void setShowBallCount(){
+        showBallCount.setText(String.format("%d", ballCount));
+    }
+    public void setShowGameLevels(){
+        showGameLevels.setText(String.format("%d", level));
     }
 
     public void openConsolePage() throws IOException {
@@ -390,6 +414,4 @@ public class GameController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
 }
