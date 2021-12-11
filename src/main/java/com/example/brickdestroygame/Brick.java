@@ -10,48 +10,39 @@ public class Brick {
 
     public Color getSingleColourLayout(int level){
         if(level == 1){
-            singleColour = Color.RED; //clay
-            System.out.println("Single1");
+            singleColour = Color.RED; //clay brick
         }
         else if(level == 5){
-            System.out.println("Single2");
-            singleColour = Color.GRAY; //Cement
+            singleColour = Color.GRAY; //Cement brick
         }
         else if(level == 6){
-            System.out.println("Single3");
-            singleColour = Color.SILVER; //Steel
+            singleColour = Color.SILVER; //Steel brick
         }
         return singleColour;
     }
 
     public Color getChessColourLayoutA(int level){
         if(level == 2){
-            System.out.println("Chess1");
-            chessColourA = Color.RED; //Clay
+            chessColourA = Color.RED; //Clay brick
         }
         else if(level == 3){
-            System.out.println("Chess2");
-            chessColourA = Color.RED; //Clay
+            chessColourA = Color.RED; //Clay brick
         }
         else if(level == 4){
-            System.out.println("Chess3");
-            chessColourA = Color.GRAY; //Cement
+            chessColourA = Color.GRAY; //Cement brick
         }
         return chessColourA;
     }
 
     public Color getChessColourLayoutB(int level){
         if(level == 2){
-            System.out.println("Chess1");
-            chessColourB = Color.GRAY; //Cement
+            chessColourB = Color.GRAY; //Cement brick
         }
         else if(level == 3){
-            System.out.println("Chess2");
-            chessColourB = Color.SILVER; //Steel
+            chessColourB = Color.SILVER; //Steel brick
         }
         else if(level == 4){
-            System.out.println("Chess3");
-            chessColourB = Color.SILVER; //Steel
+            chessColourB = Color.SILVER; //Steel brick
         }
         return chessColourB;
     }
