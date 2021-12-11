@@ -17,5 +17,23 @@
          </font>
       </Label>
       <Button fx:id="proceedNextLevel" alignment="CENTER" layoutX="219.0" layoutY="155.0" mnemonicParsing="false" onAction="#nextGameLevel" text="Press to proceed next level!" visible="false" />
+      <Label layoutX="246.0" layoutY="187.0" prefHeight="25.0" prefWidth="55.0" text="Score :">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="219.0" layoutY="227.0" text="Ball Count : ">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="showScore" layoutX="306.0" layoutY="189.0" prefHeight="21.0" prefWidth="47.0" />
+      <Label fx:id="showBallCount" layoutX="306.0" layoutY="225.0" prefHeight="25.0" prefWidth="55.0" />
+      <Label layoutX="262.0" layoutY="155.0" text="Level ">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="showGameLevels" layoutX="306.0" layoutY="157.0" prefHeight="21.0" prefWidth="55.0" />
    </children>
 </AnchorPane>
