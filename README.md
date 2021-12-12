@@ -15,5 +15,6 @@
 * A game over screen of showing total score earned and highest score will be shown after the player ended the game.
 * The rewards of the game are given when the player destroys the brick type of clay, cement and steel. If the player destroys one clay brick, the score board will add 1 score. For the cement brick, the score board will add 2 score and lastly for the steel brick, the score board will add 3.
 * The penalties of the game is by losing points if the player drops the ball and didn't catch it by the paddle.
-
-
+* A Guide Page was did to increase the understanding of player on how to play this game and what are the keys to control the paddle movement.
+* The game is able to continue when the player press pause halfway through the game.
+* Additional of levels in the game is added too.
