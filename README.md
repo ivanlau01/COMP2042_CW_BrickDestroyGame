@@ -5,7 +5,7 @@
 ## Refactoring Changes ##
 * The codes given from the link are completely converted into JavaFX.
 * The design of the game are being completed by using Scene Builder.
-* MVC design patterns are applied in JavaFX. For example my model are named (name).java, view are GUI which are converted in FXML files and controller are named (name)Controller.java.
+* MVC design patterns are applied in JavaFX. For example my model are named (name).java, view from GUI which are converted in FXML files and controller are named (name)Controller.java.
 * Player.java file is merged with GameController.java.
 
 ----
