@@ -18,3 +18,4 @@
 * A Guide Page was did to increase the understanding of player on how to play this game and what are the keys to control the paddle movement.
 * The game is able to continue when the player press pause halfway through the game.
 * Additional of levels in the game is added too.
+* Added background image in Home Page, Guide Page, Game Page and Game Over Page.
