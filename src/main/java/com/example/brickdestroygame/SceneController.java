@@ -21,7 +21,8 @@ public class SceneController {
     public void onToGamePage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("GamePage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root,600,450);
+        scene = new Scene(root, 600, 450);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

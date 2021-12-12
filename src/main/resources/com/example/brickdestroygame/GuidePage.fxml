@@ -6,40 +6,55 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brickdestroygame.SceneController">
+<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('file:src/main/resources/brickControlPage.png');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brickdestroygame.SceneController">
    <children>
       <VBox layoutX="65.0" layoutY="14.0" prefHeight="73.0" prefWidth="495.0">
          <children>
-            <Label alignment="CENTER" prefHeight="73.0" prefWidth="486.0" text="GUIDE FOR THIS BRICK BREAKER GAME" textAlignment="CENTER">
+            <Label alignment="CENTER" prefHeight="73.0" prefWidth="486.0" text="GUIDE FOR THIS BRICK BREAKER GAME" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="89.0" layoutY="89.0" prefHeight="237.0" prefWidth="424.0">
+      <VBox layoutX="124.0" layoutY="149.0" prefHeight="237.0" prefWidth="424.0">
          <children>
-            <Label prefHeight="39.0" prefWidth="428.0" text="-&gt; Press SPACEBAR to start your game">
+            <Label prefHeight="39.0" prefWidth="428.0" text="-&gt; Press SPACEBAR to start your game" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label prefHeight="32.0" prefWidth="424.0" text="-&gt; Press A to move left">
+            <Label prefHeight="32.0" prefWidth="424.0" text="-&gt; Press A to move left" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label prefHeight="37.0" prefWidth="424.0" text="-&gt; Press D to move right">
+            <Label prefHeight="37.0" prefWidth="424.0" text="-&gt; Press D to move right" textFill="#fffefe">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label prefHeight="33.0" prefWidth="424.0" text="-&gt; Press P to pause your game">
+            <Label prefHeight="33.0" prefWidth="424.0" text="-&gt; Press P to pause your game" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label prefHeight="33.0" prefWidth="424.0" text="-&gt; Press F1 to skip levels or reset ball count" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
          </children></VBox>
-      <Button layoutX="501.0" layoutY="333.0" mnemonicParsing="false" onAction="#onToHomePage" text="BACK" />
+      <Button layoutX="514.0" layoutY="351.0" mnemonicParsing="false" onAction="#onToHomePage" text="BACK" />
+      <Label alignment="CENTER" layoutX="53.0" layoutY="77.0" prefHeight="33.0" prefWidth="495.0" text="*In this game, the player moves a PADDLE from side-to-side to hit a ball. " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="110.0" prefHeight="19.0" prefWidth="568.0" text="*The objective is to eliminate all the BRICKS at the top of the screen by hitting them with the BALL." textFill="WHITE">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
