@@ -9,7 +9,7 @@
 * Player.java file is merged with GameController.java.
 
 ----
-## Extra Features ##
+## Additional Features ##
 * The animation of crack is changed to colour changing of brick types when it's hit by the ball.
 * Score is added and can be seen in the game page while playing the game.
 * A game over screen of showing total score earned and highest score will be shown after the player ended the game.
