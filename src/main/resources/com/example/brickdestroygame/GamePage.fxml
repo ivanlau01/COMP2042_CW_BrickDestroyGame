@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scene" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brickdestroygame.GameController">
+<AnchorPane fx:id="scene" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('file:src/main/resources/brickGamePage.png');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brickdestroygame.GameController">
    <children>
       <Rectangle fx:id="paddle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="10.0" layoutX="225.0" layoutY="430.0" onKeyPressed="#KeyPressed" onKeyReleased="#KeyReLeased" stroke="BLACK" strokeType="INSIDE" width="150.0" />
       <Circle fx:id="ball" fill="#f6ff00" layoutX="300.0" layoutY="419.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
@@ -17,23 +17,32 @@
          </font>
       </Label>
       <Button fx:id="proceedNextLevel" alignment="CENTER" layoutX="219.0" layoutY="155.0" mnemonicParsing="false" onAction="#nextGameLevel" text="Press to proceed next level!" visible="false" />
-      <Label layoutX="246.0" layoutY="187.0" prefHeight="25.0" prefWidth="55.0" text="Score :">
+      <Label layoutX="246.0" layoutY="187.0" prefHeight="25.0" prefWidth="55.0" text="Score :" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="219.0" layoutY="227.0" text="Ball Count : ">
+      <Label layoutX="219.0" layoutY="227.0" text="Ball Count : " textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="showScore" layoutX="306.0" layoutY="189.0" prefHeight="21.0" prefWidth="47.0" />
-      <Label fx:id="showBallCount" layoutX="306.0" layoutY="225.0" prefHeight="25.0" prefWidth="55.0" />
-      <Label layoutX="262.0" layoutY="155.0" text="Level ">
+      <Label fx:id="showScore" layoutX="300.0" layoutY="189.0" prefHeight="21.0" prefWidth="47.0" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="showBallCount" layoutX="306.0" layoutY="227.0" prefHeight="25.0" prefWidth="55.0" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="269.0" layoutY="155.0" text="LEVEL" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="showGameLevels" layoutX="306.0" layoutY="157.0" prefHeight="21.0" prefWidth="55.0" />
+      <Label fx:id="showGameLevels" layoutX="320.0" layoutY="157.0" prefHeight="21.0" prefWidth="55.0" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>

@@ -8,24 +8,24 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brickdestroygame.SceneController">
     <center>
-        <AnchorPane fx:id="scenePane" prefHeight="300.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="scenePane" prefHeight="300.0" prefWidth="450.0" style="-fx-background-image: url('file:src/main/resources/brickHomePage.jpg');" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="147.0" layoutY="21.0" prefHeight="44.0" prefWidth="195.0" text="Welcome to:">
+                <Label layoutX="147.0" layoutY="21.0" prefHeight="44.0" prefWidth="172.0" text="Welcome to:" textFill="WHITE">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </Label>
-                <Label layoutX="118.0" layoutY="54.0" prefHeight="58.0" prefWidth="253.0" text="Brick Breaker" textAlignment="CENTER">
+                <Label layoutX="118.0" layoutY="54.0" prefHeight="58.0" prefWidth="253.0" text="Brick Breaker" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font size="40.0" />
                     </font>
                 </Label>
-                <Label layoutX="169.0" layoutY="104.0" prefHeight="30.0" prefWidth="111.0" text="Version 0.1" textAlignment="CENTER">
+                <Label layoutX="169.0" layoutY="104.0" prefHeight="30.0" prefWidth="111.0" text="Version 0.1" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Button layoutX="159.0" layoutY="153.0" mnemonicParsing="false" onAction="#onToGamePage" prefHeight="44.0" prefWidth="130.0" text="Start">
+                <Button layoutX="159.0" layoutY="153.0" mnemonicParsing="false" onAction="#onToGamePage" prefHeight="44.0" prefWidth="132.0" text="Start">
                     <font>
                         <Font size="20.0" />
                     </font>
