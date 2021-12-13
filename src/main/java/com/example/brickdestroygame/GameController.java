@@ -30,7 +30,7 @@ public class GameController implements Initializable {
     private GameBall gameBall;
     private final ArrayList<Rectangle> bricks = new ArrayList<>();
     private int level = 1;
-    private int ballCount = 3;
+    public int ballCount = 3;
     private int healthBrick = 3;
     private int score = 0;
     private Stage stage;
